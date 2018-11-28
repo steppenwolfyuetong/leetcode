@@ -5,9 +5,9 @@ using namespace std;
 
 // 动态规划
 // 设dp[j,i]表示[j,i]是否为回文字符串
-//			 1    							(i = j)
-// dp[j,i] = s[i]=s[j]  					(i = j+1)
-// 			 s[i]=s[j] && dp[j+1,i-1]		(i > j+1)
+// 1    						(i = j)
+// dp[j,i] = s[i]=s[j]  		(i = j+1)
+// s[i]=s[j] && dp[j+1,i-1]		(i > j+1)
 
 class Solution {
 public:
