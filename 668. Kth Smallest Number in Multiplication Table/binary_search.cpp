@@ -1,6 +1,3 @@
-#include <iostream>
-using namespace std;
-
 class Solution {
 public:
     // same as 378. Kth Smallest Element in a Sorted Matrix
@@ -34,8 +31,3 @@ public:
     }
 };
 
-int main() {
-    Solution *s = new Solution();
-    cout << s->findKthNumber(2,3,6) << endl;
-    return 0;
-}
