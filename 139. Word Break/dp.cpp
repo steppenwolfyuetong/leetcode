@@ -1,3 +1,10 @@
+/*
+ *  dp[i]: s[0,i) can be expressed by dict
+ *  dp[i] depends on all smaller problems (dp[0], dp[1], ... dp[i-1])
+ */
+
+
+
 class Solution {
 public:
     bool wordBreak(string s, vector<string>& wordDict) {
@@ -5,24 +12,22 @@ public:
         dp[0] = true;
 
         for (int i = 1; i <= s.length(); i++) {
+            // faster when dict's scale is huge
+            for (int j = 0; j < i; j++) {
+                if (dp[j] && find(wordDict.begin(), wordDict.end(), s.substr(j, i - j)) != wordDict.end()) {
+                    dp[i] = true;
+                    break;
+                }
+            }
+        }
+        /*
+        for (int i = 1; i <= s.length(); i++) {
             for (auto& word : wordDict) {
                 if (word.length() <= i) {
                     if (dp[i - word.length()] && (s.substr(i - word.length(), word.length()) == word)) {
                             dp[i] = true;
                             break;
                     }
-                }
-            }
-        }
-        /*
-        for(int i = 1; i <= s.length(); i++) {
-            // faster when dict's scale is huge
-            for (int j = 0; j < i; j++) {
-                if (!dp[j])
-                    continue;
-                if (dict.find(s.substr(j, i - j)) != dict.end()) {
-                    dp[i] = true;
-                    break;
                 }
             }
         }
