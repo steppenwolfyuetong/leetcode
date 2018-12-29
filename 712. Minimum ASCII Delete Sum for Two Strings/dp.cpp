@@ -1,5 +1,5 @@
 /*
- *  dp[i][j] is lowest ASCII sum of deleted characters to make two strings equal.
+ *  dp[i][j] is lowest ASCII sum of deleted characters to make two strings equal between s1[0,i) and s2[0,j).
  *  
  *  init state:
  *  dp[0][0] = 0
@@ -11,6 +11,7 @@
  *     dp[i][j] = dp[i-1][j-1]
  *  2. s1[i - 1] != s2[j-1] 
  *     dp[i][j] = min(dp[i][j-1] + ascii(s2[j-1]), dp[i-1][j] + ascii(s1[i-1]));
+ *                      delete from s2                  delete from s1
  */
 
 
