@@ -8,13 +8,13 @@ using namespace std;
 class Solution {
 public:
     int lowerbound(vector<int>& nums, int target) {
-        int low = 0, high = nums.size();
+        int low = 0, high = nums.size();                // target can be bigger than max(nums), so lower bound can be nums.end()
         // loop invariant: with result is lower_bound(letters.begin(), letters.end(), target), low <= target <= high
         // we need to handle high = low + 1, according to the if-else statement, it won't loop forever
         while (low < high) {
             int mid = (low + high) / 2;
             if (target <= nums[mid]) {
-                high = mid;                 // low can be the result
+                high = mid;                 // mid can be the result
             } else if (target > nums[mid]) {
                 low = mid + 1;              // mid can't be the result   
             }        

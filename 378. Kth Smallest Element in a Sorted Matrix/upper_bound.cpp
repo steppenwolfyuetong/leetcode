@@ -12,7 +12,7 @@ public:
         while (low < high) {
             int mid = (low + high) / 2;
 
-            // count elements which are smaller than mid
+            // count elements which <= mid
             int count = 0;
             for (auto& row : matrix) {
                 count += upper_bound(row.begin(), row.end(), mid) - row.begin();
