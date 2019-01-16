@@ -14,6 +14,9 @@ Given binary tree,
 return 4.
 */
 
+#include <iostream>
+using namespace std;
+
 
 struct TreeNode {
     int val;
@@ -26,19 +29,24 @@ class Solution {
 public:
     int countUnivalSubtrees(TreeNode* root) {
         int rt = 0;
-        helper(rt, -1, rt);
+        helper(root, -1, rt);
         return rt;
     }
 
-    bool helper(TreeNode* root, int val, int &rt)
+    // val is the value of parent of cur
+    bool helper(TreeNode* cur, int val, int &rt)
     {
-        if(!root)
-            return false;
-        if(!helper(root->left, root->val, rt) || !helper(root->right, root->val, rt))
-            return false;
+        if (cur == nullptr) {
+            return true;
+        }
 
+        if (!helper(cur->left, cur->val, rt) | !helper(cur->right, cur->val, rt)) {
+            return false;
+        }
+
+        // subtree (root is cur) is unival subtree
         rt++;
-        return root->val == val;
+        return cur->val == val;
     }
 
 	TreeNode* createBiTree(TreeNode *T)
@@ -56,3 +64,10 @@ public:
 		}
 	}
 };
+
+int main() {
+    Solution *s = new Solution();
+    TreeNode *root = new TreeNode(0);
+    root = s->createBiTree(root);
+    cout << s->countUnivalSubtrees(root) << endl;
+}
