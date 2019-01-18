@@ -18,14 +18,13 @@ public:
         return result;
     }
 
-    vector<Interval> insert(vector<Interval>& intervals, Interval newInterval) {
+    void insert(vector<Interval>& intervals, Interval newInterval) {
         vector<Interval>::iterator it = intervals.begin();
         while(it != intervals.end())
         {
             if(newInterval.end < it->start)
             {
                 intervals.insert(it, newInterval);
-                return intervals;
             }
             else if(newInterval.start > it->end)
             {
@@ -34,13 +33,13 @@ public:
             }
             else
             {
+                // newInterval and *it are overlapping
                 newInterval.start = min(newInterval.start, it->start);
                 newInterval.end = max(newInterval.end, it->end);
                 it = intervals.erase(it);
             }
         }
         intervals.insert(intervals.end(), newInterval);
-        return intervals;
     }
 };
 
