@@ -46,6 +46,7 @@ public:
         return j == nums2.size() || (i < nums1.size() && nums1[i] > nums2[j]);
     }
 
+    // create maximum number with one array of specific size
     vector<int> maxArray(vector<int> &nums, int size) {
         vector<int> result;
         int len = size;

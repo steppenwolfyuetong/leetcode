@@ -1,3 +1,10 @@
+// rob[i]: max profit with robbing house i
+// unrob[i]: maxprofit without robbing house i
+//
+// rob[i] = rob[i-2] + nums[i]
+// unrob[i] = rob[i-1]
+// dp[i] = max(rob[i], unrob[i])
+
 class Solution {
 public:
     int rob(vector<int>& nums) {
