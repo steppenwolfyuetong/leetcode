@@ -1,3 +1,4 @@
+// use combination of coordinates in UnionFindSet
 class UnionFindSet {
 public:
     // union two coordinate

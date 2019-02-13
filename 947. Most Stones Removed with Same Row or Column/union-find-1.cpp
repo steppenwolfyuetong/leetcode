@@ -1,3 +1,4 @@
+// directly use the index of stone to express the connection
 class UnionFindSet {
 public:
     UnionFindSet(int n) {

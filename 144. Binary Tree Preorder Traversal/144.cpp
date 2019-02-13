@@ -108,17 +108,13 @@ public:
     }	
 	*/
 	
-	TreeNode* createBiTree(TreeNode *T)
-	{
+	TreeNode* createBiTree(TreeNode *T) {
 		int val;
-		cin>>val;
-		if(val == 0)
+		cin >> val;
+		if(val == 0) {
 			return NULL;
-		else
-		{
-			if(!(T = (TreeNode *) malloc(sizeof(TreeNode))))
-				cout<<"Failure"<<endl;
-			T->val = val;
+        } else {
+            T = new TreeNode(val);
 			T->left = createBiTree(T->left);
 			T->right = createBiTree(T->right);
 			return T;
