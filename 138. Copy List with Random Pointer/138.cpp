@@ -24,6 +24,11 @@ struct RandomListNode {
 
 class Solution {
 public:
+    /*
+     *  copy a list first (random points to raw list)
+     *  and save and node map from raw node to corresponding new node
+     *  then rebuild random pointer from the map
+     */
     RandomListNode *copyRandomList(RandomListNode *head) {
         if(head == NULL)
             return NULL;

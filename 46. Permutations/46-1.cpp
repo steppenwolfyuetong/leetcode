@@ -23,3 +23,4 @@ public:
 		    swap(num[begin], num[i]);
 		}
     }
+};

@@ -29,6 +29,7 @@ public:
             {
                 newInterval.start = min(newInterval.start, it->start);
                 newInterval.end = max(newInterval.end, it->end);
+                // merge current interval to newInterval, erase will move to next interval, and check again
                 it = intervals.erase(it);
             }
         }
