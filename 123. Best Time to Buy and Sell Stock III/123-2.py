@@ -1,6 +1,8 @@
 ﻿# 设f[i],表示区间[0,i](0<=i<=n-1)的最大利润，g[i]表示区间[i,n-1](0<=i<=n-1)的最大利润
 # ans = max(f[i]+g[i])
 
+# 类似845. Longest Mountain in Array
+
 class Solution:
     # @param {integer[]} prices
     # @return {integer}

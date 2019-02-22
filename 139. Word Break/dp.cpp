@@ -11,6 +11,7 @@ public:
         vector<bool> dp(s.length() + 1, false);
         dp[0] = true;
 
+        // i is the break index
         for (int i = 1; i <= s.length(); i++) {
             // faster when dict's scale is huge
             for (int j = 0; j < i; j++) {

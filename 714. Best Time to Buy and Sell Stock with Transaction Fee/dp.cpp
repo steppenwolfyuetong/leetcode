@@ -8,7 +8,7 @@
  *  At day i, we may buy stock (from previous sell status) or do nothing (from previous buy status):
  *  buy[i]  = max(sell[i - 1] - prices[i], buy[i-1])        // must sell before buy
  *  At day i, we may sell stock (from previous buy status) or keep holding (from previous sell status):
- *  sell[i] = max(buy[i - 1] + prices[i], sell[i-1])        // must sell after buy
+ *  sell[i] = max(buy[i - 1] + prices[i] - fee, sell[i-1])        // must sell after buy
  *
  *
  *  b1 = max(s0 - p[i], b0)

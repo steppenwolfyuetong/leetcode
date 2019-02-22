@@ -12,6 +12,9 @@ void display(vector<vector<int>> &dp) {
     cout << endl;
 }
 
+// dp[i][j] min coins to get j with first i coins
+// dp[i][j] = min(dp[i][j], dp[i][j - coin[i]] + 1)
+
 class Solution {
 public:
     /*

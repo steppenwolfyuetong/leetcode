@@ -1,7 +1,7 @@
 /*
 In each operation, you pick any nums[i] and delete it to earn nums[i] points. After, you must delete every element equal to nums[i] - 1 or nums[i] + 1.
 
-Similar to 198. House Robber, if you earn x, you't earn x - 1 or x + 1.
+Similar to 198. House Robber, if you earn x, you can't earn x - 1 or x + 1.
 
 Convert origin input to aggregate input. 
 [2, 2, 3, 3, 3, 4] -> [2*2, 3*3, 4]

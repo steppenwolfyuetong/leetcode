@@ -15,13 +15,13 @@ public:
         int m = nums1.size(), n = nums2.size();
         vector<int> result;
         for (int i = max(0, k - n); i <= min(m, k); i++) {
-            vector<int> candidate = merge(move(maxArray(nums1, i)), move(maxArray(nums2, k - i)), k);
+            vector<int> candidate = merge(move(maxArray(nums1, i)), move(maxArray(nums2, k - i)));
             result = max(result, candidate);
         }
         return result;
     }
 
-    vector<int> merge(vector<int> nums1, vector<int> nums2, int k) {
+    vector<int> merge(vector<int> nums1, vector<int> nums2) {
         vector<int> result;
         int i = 0, j = 0;
         while (i < nums1.size() && j < nums2.size()) {
@@ -47,6 +47,8 @@ public:
     }
 
     // create maximum number with one array of specific size
+    // O(kn)
+    /*
     vector<int> maxArray(vector<int> &nums, int size) {
         vector<int> result;
         int len = size;
@@ -57,6 +59,25 @@ public:
             len--;
             start = index + 1;
             end = nums.size() - len + 1;
+        }
+        return result;
+    }
+    */
+
+    // O(n)
+    vector<int> maxArray(vector<int> &nums, int size) {
+        vector<int> result(size);                   // work like a stack, top is the stack top
+        int top = 0;                                // top points to next digit to select in result
+        for (int i = 0; i < nums.size(); i++) {
+            // result have top now, nums[i] can replace result[top - 1]
+            // len(nums[i:]) = nums.size() - i, so (top - 1) + nums.size() - i >= size
+            while (top > 0 && nums[i] > result[top - 1] && (nums.size() - i + top - 1) >= size) {
+                top--;                            // pop out
+            }
+
+            if (top < size) {
+                result[top++] = nums[i];
+            }
         }
         return result;
     }

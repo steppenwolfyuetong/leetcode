@@ -11,8 +11,8 @@ The good thing about lists is that iterators are never invalidated by modifiers 
 class LRUCache{
     //m_list为LRU队列 越靠前越是最近使用
     size_t m_capacity;
-    list<pair<int, int>> m_list;                               // m_list_iter->first: key, m_list_iter->second: value;
-    unordered_map<int,  list<pair<int, int>>::iterator> m_map; // m_map_iter->first: key, m_map_iter->second: list iterator;
+    list<pair<int, int>> m_list;                               // list of <key, value>
+    unordered_map<int,  list<pair<int, int>>::iterator> m_map; // map of <key, m_list::iterator>
 public:
     LRUCache(size_t capacity):m_capacity(capacity) {
     }
