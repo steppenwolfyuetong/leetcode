@@ -30,6 +30,7 @@ using namespace std;
 
 class Solution {
 public:
+    // 实际转换为一个0-1背包问题 类似416
     int findTargetSumWays(vector<int>& nums, int S) {
         int sum = accumulate(nums.begin(), nums.end(), 0);
         if (sum < S) {                      // avoid MLE if S is huge and sum is small

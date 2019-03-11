@@ -44,7 +44,7 @@ public:
             dp[i][1] = sum / i;
         }
 
-        for (int j = 2; j <= K; j++) {                          // group size
+        for (int j = 2; j <= K; j++) {                          // group count
             for (int i = 1; i <= A.size(); i++) {
                 // n is last group size
                 double sum = 0;

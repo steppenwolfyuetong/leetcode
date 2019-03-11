@@ -1,3 +1,6 @@
+// We can add +/- to each number to get target.
+// The sum of elements in the given array will not exceed 1000, which means we can use dp
+//
 // dp[i][j]: ways to get j with nums[0,i]
 //
 // dp[i][j] = dp[i - 1][j - nums[i]] + dp[i - 1][j + nums[i]]
@@ -23,6 +26,7 @@ void display(vector<vector<int>> &dp) {
 class Solution {
 public:
     // O(n * sum) space
+    /*
     int findTargetSumWays(vector<int>& nums, int S) {
         int n = nums.size();        
         int sum = accumulate(nums.begin(), nums.end(), 0);
@@ -52,23 +56,47 @@ public:
         }
         return dp[n - 1][zeroIndex + S];
     }
+    */
 
     // dp[i][j] only rely on dp[i - 1][j +/- nums[i]]
     // so we can use only O(sum) space
     int findTargetSumWays(vector<int>& nums, int S) {
+        int n = nums.size();        
+        int sum = accumulate(nums.begin(), nums.end(), 0);
+        if (sum < S) {
+            return 0;
+        }
+
+        // combination of nums can be in range [-sum, sum], in total 2 * sum + 1
+        vector<int> cur(2 * sum + 1, 0);
+        // index of 0 in [-sum, sum] is sum
+        int zeroIndex = sum;
+
+        cur[zeroIndex] = 1;          // with no numbers, 0 can be make up
+        for (int i = 0; i < nums.size(); i++) {
+            vector<int> next(2 * sum + 1, 0);
+            for (int j = 0; j < 2 * sum + 1; j++) {
+                if (j - nums[i] >= 0) {
+                    next[j] += cur[j - nums[i]];
+                }
+                if (j + nums[i] < 2 * sum + 1) {
+                    next[j] += cur[j + nums[i]];
+                }
+            }
+            swap(cur, next);
+        }
+        return cur[zeroIndex + S];
     }
 };
 
 int main() {
     Solution *s = new Solution();
     vector<int> nums{1,1,1,1,1};
-    /*
     cout << s->findTargetSumWays(nums, 1) << endl;
     cout << s->findTargetSumWays(nums, 2) << endl;
     cout << s->findTargetSumWays(nums, 3) << endl;
     cout << s->findTargetSumWays(nums, 4) << endl;
     cout << s->findTargetSumWays(nums, 5) << endl;
-    */
 
     nums = {0,0,0,0,0,0,0,0,1};
     cout << s->findTargetSumWays(nums, 1) << endl;
