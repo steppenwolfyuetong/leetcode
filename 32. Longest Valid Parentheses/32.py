@@ -2,8 +2,8 @@ class Solution:
     # @param {string} s
     # @return {integer}
     def longestValidParentheses(self, s):
-        dp = [0] * (len(s)+1)
-        count = 0
+        dp = [0] * (len(s)+1)           # dp[i]: longest length of s[:i]
+        count = 0                       # count is the num of unmatched '('
         for i in range(1,len(dp)):
             if s[i-1] == '(':
                 count += 1

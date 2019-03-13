@@ -13,27 +13,21 @@ class Solution {
 public:
     vector<Interval> merge(vector<Interval>& intervals) {
         vector<Interval> result;
-        for(int i = 0; i < intervals.size(); i++)
+        for (int i = 0; i < intervals.size(); i++)
             insert(result, intervals[i]);
         return result;
     }
 
     void insert(vector<Interval>& intervals, Interval newInterval) {
         vector<Interval>::iterator it = intervals.begin();
-        while(it != intervals.end())
-        {
-            if(newInterval.end < it->start)
-            {
-                intervals.insert(it, newInterval);
-            }
-            else if(newInterval.start > it->end)
-            {
+        while (it != intervals.end()) {
+            if (newInterval.start > it->end) {              // newInterval is on it's right side
                 it++;
                 continue;
-            }
-            else
-            {
-                // newInterval and *it are overlapping
+            } else if (newInterval.end < it->start) {       // newInterval is on it's left side
+                intervals.insert(it, newInterval);
+                return;
+            } else {                                        // newInterval and *it are overlapping
                 newInterval.start = min(newInterval.start, it->start);
                 newInterval.end = max(newInterval.end, it->end);
                 it = intervals.erase(it);
@@ -45,10 +39,10 @@ public:
 
 int main() {
     vector<Interval> intervals;
-    intervals.push_back(Interval(1,3));
-    intervals.push_back(Interval(2,6));
     intervals.push_back(Interval(8,10));
     intervals.push_back(Interval(15,18));
+    intervals.push_back(Interval(1,3));
+    intervals.push_back(Interval(2,6));
 	Solution *s = new Solution;
     vector<Interval> result = s->merge(intervals);
     for(int i = 0; i < result.size(); i++)

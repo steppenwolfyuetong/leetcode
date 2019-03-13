@@ -5,29 +5,28 @@ using namespace std;
 
 class Solution {
 public:
-    vector<vector<int> > permute(vector<int>& num) {
-        sort(num.begin(),num.end());
-        vector<vector<int> > result;
-        vector<int> cur;
-        dfs(num,cur,result);
+    vector<vector<int>> permute(vector<int>& nums) {
+        vector<vector<int>> result;
+        vector<int> path;
+        vector<bool> used(nums.size(), false);
+        dfs(nums, used, path, result);
         return result;
     }
 
-    void dfs(vector<int>& num, vector<int>& cur, vector<vector<int> >& result)
+    void dfs(vector<int>& nums, vector<bool>& used, vector<int>& path, vector<vector<int>>& result)
     {
-        if(cur.size() == num.size())
-        {
-            result.push_back(cur);
+        if(path.size() == nums.size()) {
+            result.push_back(path);
             return;
         }
-        for(int i = 0; i < num.size(); i++)
-        {
-            vector<int>::iterator iter = find(cur.begin(),cur.end(),num[i]);
-            if(iter == cur.end())
-            {
-                cur.push_back(num[i]);
-                dfs(num,cur,result);
-                cur.pop_back();
+
+        for(int i = 0; i < nums.size(); i++) {
+            if(!used[i]) {
+                used[i] = true;
+                path.push_back(nums[i]);
+                dfs(nums, used, path, result);
+                used[i] = false;
+                path.pop_back();
             }
         }
     }

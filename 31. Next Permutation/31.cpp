@@ -1,60 +1,55 @@
-#include<iostream>
+#include <vector>
+#include <iostream>
+#include <algorithm>
 using namespace std;
 
-
-void swap(int *a,int *b)
+void display(vector<int> &nums)
 {
-	int t;
-	t = *a;*a = *b;*b = t;
-	return;
-} 
-
-void reverse(int* num,int start,int end)
-{
-	if(start == end)
-		return;
-	while(start < end)
-	{
-		swap(&num[start++],&num[end--]);
-	}
-	return;
+    for(int num : nums)
+        cout << num << ' ';
+    cout << endl;
 }
 
-void nextPermutation(int* nums, int numsSize) {
-	if(numsSize <= 1)
-		return;
-	int i = 0;
-	for(i = numsSize - 1;i > 0;i--)
-	{
-		if(nums[i] <= nums[i-1])
-			continue;
-		else
-		{
-			for(int j = numsSize - 1;j > i-1;j--)
-			{
-				if(nums[j] > nums[i-1])
-				{
-					swap(&nums[j],&nums[i-1]);
-					break;
-				}
-			}
-			reverse(nums,i,numsSize-1);
-			break;
-		}
-	}
-	if(i == 0)
-		reverse(nums,0,numsSize-1);
-	return;
-}
+class Solution {
+public:
+    // nextPermutation也就是找到下一个比当前数大的数
+    void nextPermutation(vector<int>& nums) {
+        if(nums.size() <= 1)
+            return;
+        
+        // {1,9,8,4,7,6,5,3,1}
+        // 从低位开始 找到第一个降序的元素 即4
+        // 找到降序的元素 也就能找到下一个比当前数大的数
+        vector<int>::iterator firstDesc = nums.end() - 2;
+        for(; firstDesc >= nums.begin(); firstDesc--)
+            if(*(firstDesc) < *(firstDesc + 1))
+                break;
+        
+        // 从低位开始 找到第一个比firstDesc大的数bigger 即5
+        // 并与firstDesc交换 交换这个操作不会影响firstDesc右侧的升降关系
+        // {1,9,8,5,7,6,4,3,1}
+        if(firstDesc >= nums.begin())
+        {
+            vector<int>::iterator bigger = nums.end() - 1;
+            for(; bigger > firstDesc; bigger--)
+                if(*(firstDesc) < *(bigger))
+                    break;
+            swap(*firstDesc, *bigger);
+        }
+        
+        // 交换后 firstDesc并不是最小值 由于firstDesc右侧都是从大到小 再逆序一下即可 变为从小到大 变为最小值
+        // {1,9,8,5,1,3,4,6,7}
+        reverse(firstDesc + 1, nums.end());
+    }
+};
 
 
 int main()
 {
-	int x=1,y=2;
-	swap(&x,&y);
-	cout<<x<<' '<<y<<endl;
-	int a[3]={5,1,1};
-	nextPermutation(a,3);
-	cout<<a[0]<<a[1]<<a[2]<<endl;;
-	return 0;
+    Solution *s = new Solution();
+    vector<int> nums{1,9,8,4,7,6,5,3,1};
+    display(nums);
+    s->nextPermutation(nums);
+    display(nums);
+    return 0;
 }

@@ -9,22 +9,20 @@ public:
         int ans = 0, last = -1;
         // store all the indices of '('
         stack<int> stk;
-        for(int i = 0; i < s.size(); i++)
-        {
-            if(s[i] == '(')
+        for(int i = 0; i < s.size(); i++) {
+            if(s[i] == '(') {
                 stk.push(i);
-            else
-            {  
+            } else {  
                 // there is no matching '("
-                if(stk.empty())
+                if(stk.empty()) {
                     last = i;
-                else
-                {
+                } else {
                     stk.pop();
-                    if(stk.empty())
+                    if(stk.empty()) {
                         ans = max(ans,i-last);
-                    else
+                    } else {
                         ans = max(ans,i-stk.top());
+                    }
                 }
             }
         }
