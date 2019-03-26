@@ -1,5 +1,5 @@
 /*
- *  dp[i]: s[0,i) can be expressed by dict
+ *  dp[i]: first i characters can be expressed by dict
  *  dp[i] depends on all smaller problems (dp[0], dp[1], ... dp[i-1])
  */
 
@@ -11,8 +11,8 @@ public:
         vector<bool> dp(s.length() + 1, false);
         dp[0] = true;
 
-        // i is the break index
         for (int i = 1; i <= s.length(); i++) {
+            // j is the break index, we can check smaller subproblem dp[j], and s.substr(j, i - j)
             // faster when dict's scale is huge
             for (int j = 0; j < i; j++) {
                 if (dp[j] && find(wordDict.begin(), wordDict.end(), s.substr(j, i - j)) != wordDict.end()) {

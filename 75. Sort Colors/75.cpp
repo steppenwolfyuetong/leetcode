@@ -7,6 +7,7 @@ class Solution {
 public:
 	/*
     // 两次扫描
+    // we can use fill_n
     void sortColors(vector<int>& nums) {
         int count[3] = {0};
         for(int i = 0; i < nums.size(); i++)
