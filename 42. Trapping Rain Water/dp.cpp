@@ -7,7 +7,12 @@ public:
 
         int ans = 0;
         int size = height.size();
-        // left_max[i] is max bar on the left of height[i], right_max[i] is max bar on the right of height[i]
+        // the maximum level of water it can trap after the rain, which is equal to the minimum of maximum height 
+        // of bars on both the sides minus its own height.
+        // 
+        // so we save left sides maximum height in left_max, right sides maximum height in right_max
+        //
+        // left_max[i] is max bar in range [0,i], right_max[i] is max bar in range [i, ]
         vector<int> left_max(size), right_max(size);        
 
         // search from left to right

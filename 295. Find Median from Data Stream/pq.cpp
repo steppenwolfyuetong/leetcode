@@ -5,6 +5,8 @@ public:
         
     }
     
+    // invarient: 
+    // size(maxHeap) == size(minHeap) || size(maxHeap) == 1 + size(minheap)
     void addNum(int num) {
         if(maxHeap.empty() || num <= maxHeap.top())
             maxHeap.push(num);

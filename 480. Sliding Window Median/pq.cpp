@@ -7,88 +7,68 @@ using namespace std;
 
 class Solution {
 public:
+    // TLE, algorithm is ok
+    // same as 295, but since we need to remove num, a lot of useless pop/push
     vector<double> medianSlidingWindow(vector<int>& nums, int k) {
         vector<double> median;
-        unordered_map<int, int> table;
-        priority_queue<int> maxHeap(nums.begin(), nums.begin() + k);            //最大堆 保存较小部分的数
-        priority_queue<int, vector<int>, greater<int> > minHeap;                //最小堆 保存较大部分的数
+        
+        // invariant: after we add and remove, always makes size(small) == size(big) || size(small) == size(big) + 1
+        for (int i = 0; i < nums.size(); i++) {
+            insert(nums[i]);
+            // we need to remove nums[i - k]
+            if (i >= k) {
+                remove(nums[i - k]);
+            }
+            rebalance();
 
-        while(maxHeap.size() - minHeap.size() > 1)
-        {
-            minHeap.push(maxHeap.top());
-            maxHeap.pop();
+            // output median
+            if (i >= k - 1) {
+                median.emplace_back(small.size() > big.size() ? small.top() : ((double)small.top() + (double)big.top()) / 2.0);
+            }
         }
 
-        for(int i = k; i < nums.size() + 1; i++)
-        {
-            if(k % 2)
-                median.push_back(maxHeap.top() / 1.0);
-            else
-                median.push_back(((double)maxHeap.top() + (double)minHeap.top()) / 2.0);        //防止溢出
-            
-            if(i == nums.size())
-                break;
-
-            int numToAdd = nums[i];
-            int numToDelete = nums[i - k];
-            int balance = 0;
-
-            //判断要删除的数在哪个堆
-            if(numToDelete <= maxHeap.top())
-            {
-                balance -= 1;
-                if(maxHeap.top() == numToDelete)
-                    maxHeap.pop();
-                else
-                    table[numToDelete] += 1;            //标记 直到该数为堆顶的时候再删除
-            }
-            else
-            {
-                balance += 1;
-                if(minHeap.top() == numToDelete)
-                    minHeap.pop();
-                else
-                    table[numToDelete] += 1;            //标记 直到该数为堆顶的时候再删除
-            }
-
-            // balance = -2/0/2
-            if(!maxHeap.empty() && numToAdd <= maxHeap.top())
-            {
-                balance += 1;
-                maxHeap.push(numToAdd);
-            }
-            else
-            {
-                balance -= 1;
-                minHeap.push(numToAdd);
-            }
-
-            // rebalance
-            if(balance > 0)
-            {
-                minHeap.push(maxHeap.top());
-                maxHeap.pop();
-            }
-            else if(balance < 0)
-            {
-                maxHeap.push(minHeap.top());
-                minHeap.pop();
-            }
-
-            // 删除堆顶且有标记的元素
-            while(!maxHeap.empty() && table[maxHeap.top()] > 0)
-            {
-                table[maxHeap.top()] -= 1;
-                maxHeap.pop();
-            }
-            while(!minHeap.empty() && table[minHeap.top()] > 0)
-            {
-                table[minHeap.top()] -= 1;
-                minHeap.pop();
-            }
-        }
         return median;
     }
+
+    void insert(int num) {
+        if (small.empty() || num < small.top()) {
+            small.push(num);
+        } else {
+            big.push(num);
+        }
+    }
+
+    void remove(int num) {
+        if (num <= small.top()) {
+            while (small.top() != num) {
+                big.push(small.top());
+                small.pop();
+            }
+            small.pop();
+        } else {
+            while (big.top() != num) {
+                small.push(big.top());
+                big.pop();
+            }
+            big.pop();
+        }
+    }
+
+    void rebalance() {
+        while (small.size() < big.size()) {
+            small.push(big.top());
+            big.pop();
+        }
+
+        while (small.size() > big.size() + 1) {
+            big.push(small.top());
+            small.pop();
+        }
+    }
+
+private:
+    priority_queue<int> small;                              // the small half of sliding window
+    priority_queue<int, vector<int>, greater<int>> big;     // the big half of sliding window
 };
 
 int main()

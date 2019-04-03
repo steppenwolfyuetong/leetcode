@@ -26,8 +26,8 @@ public:
             // it won't loop forever, so while (left < right)
             if (count < k) {
                 low = mid + 1;
-            } else {
-                high = mid;
+            } else {                        // mid it self may not exists in matrix
+                high = mid;                 // so if count == k, we can not return mid immediately
             }
         }
         return low;

@@ -37,15 +37,22 @@ public:
         RandomListNode sleepy(0), *cur = head, *pre = &sleepy;
         while(cur != NULL)
         {
+            // temp is the new node
             RandomListNode *temp = new RandomListNode(cur->label);
             pre->next = temp;
+
+            // temp still points to source list, but we maitain a map of <old list node -> new list node>
+            // each node of old list points to its copy node, so we can recover the info from the map
             temp->random = cur->random;
             m[cur] = temp;
+
             pre = temp;
             cur = cur->next;
         }
         pre->next = NULL;
 
+        // now node of new list is all built, so we traverse the new list, get its random pointer from 
+        // the map<old -> new>
         cur = sleepy.next;
         while(cur != NULL)
         {

@@ -4,6 +4,8 @@ using namespace std;
 
 class Solution {
 public:
+    // Time complexity: O(amount^n/(coin_0*coin_1*…*coin_n))
+    // Space complexity: O(n)
     int coinChange(vector<int>& coins, int amount) {
         sort(coins.begin(), coins.end(), greater<int>());
         int result = INT_MAX;
